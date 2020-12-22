@@ -12,12 +12,13 @@ namespace Task3
             string playerChoice;
             string computerChoice;
 
-            string key = keyGenerator();
+            byte[] key = keyGenerator();
 
             bool isFinished = false;
             while (!isFinished)
             {
-                Console.WriteLine("HMAC:\n" + makeHMAC(key));
+                computerChoice = compChoice(gameOptions);
+                Console.WriteLine("HMAC:\n" + makeHMAC(key, computerChoice));
                 showOptions(gameOptions);
                 if (gameOptions.Length < 3 || gameOptions.Length % 2 == 0 || !isInputCorrect(gameOptions))
                 {
@@ -33,10 +34,9 @@ namespace Task3
                     {
                         if (isMoveCorrect(gameOptions, playerChoice))
                         {
-                            computerChoice = compChoice(gameOptions);
                             showChoises(computerChoice, playerChoice, gameOptions);
                             showWinner(gameOptions, computerChoice, playerChoice);
-                            Console.WriteLine("\nHMAC key: " + key);
+                            Console.WriteLine("\nHMAC key: " + convertKeyToString(key));
                             isFinished = true;
                         }
                         else if (playerChoice == "0")
@@ -64,22 +64,29 @@ namespace Task3
             return Convert.ToInt32(move, 10) >= 1 && Convert.ToInt32(move, 10) <= playerChoiceArray.Length;
         }
 
-        public static string makeHMAC(string key)
+        public static string makeHMAC(byte[] key, string message)
         {
-            StringBuilder hmacKey = new StringBuilder();
-            foreach (byte element in SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(key.ToString())))
+            var hash = new HMACSHA256(key);
+            var h = hash.ComputeHash(Encoding.UTF8.GetBytes(message));
+            StringBuilder newKey = new StringBuilder();
+            foreach (byte element in h)
             {
-                hmacKey.Append(element.ToString("x2"));
+                newKey.Append(element.ToString("x2"));
             }
-            return hmacKey.ToString();
+            return newKey.ToString();
         }
 
-        public static string keyGenerator()
+        public static byte[] keyGenerator()
         {
-            byte[] randomThing = new byte[16];
-            RandomNumberGenerator.Create().GetBytes(randomThing);
+            byte[] randomKey = new byte[16];
+            RandomNumberGenerator.Create().GetBytes(randomKey);
+            return randomKey;
+        }
+
+        public static string convertKeyToString(byte[] key)
+        {
             StringBuilder newKey = new StringBuilder();
-            foreach (byte element in randomThing)
+            foreach (byte element in key)
             {
                 newKey.Append(element.ToString("x2"));
             }
