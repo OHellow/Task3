@@ -1,0 +1,6 @@
+/Users/satsishur/Desktop/task3/Task3/bin/Debug/Task3.exe
+/Users/satsishur/Desktop/task3/Task3/bin/Debug/Task3.pdb
+/Users/satsishur/Desktop/task3/Task3/obj/Debug/Task3.csprojAssemblyReference.cache
+/Users/satsishur/Desktop/task3/Task3/obj/Debug/Task3.csproj.CoreCompileInputs.cache
+/Users/satsishur/Desktop/task3/Task3/obj/Debug/Task3.exe
+/Users/satsishur/Desktop/task3/Task3/obj/Debug/Task3.pdb
