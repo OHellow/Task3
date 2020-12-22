@@ -36,7 +36,7 @@ namespace Task3
                             computerChoice = compChoice(gameOptions);
                             showChoises(computerChoice, playerChoice, gameOptions);
                             showWinner(gameOptions, computerChoice, playerChoice);
-                            Console.WriteLine("\nHMAC: " + makeHMAC(key));
+                            Console.WriteLine("\nHMAC key: " + key);
                             isFinished = true;
                         }
                         else if (playerChoice == "0")
